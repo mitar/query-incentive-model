@@ -1,0 +1,4 @@
+.*
+*.pyc
+*.sqlite
+/prop30/secrets.py

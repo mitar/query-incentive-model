@@ -2,7 +2,7 @@ import os
 import sys
 
 os.environ['HOME'] = '/tmp'
-os.environ['DJANGO_SETTINGS_MODULE'] = 'prop30.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'prop30.settings_production'
 
 import django.core.handlers.wsgi
 

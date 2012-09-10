@@ -1,23 +1,26 @@
 import os
 
-#This flag allows debug messages to be output as the HTTP response if there is an error
+settings_dir = os.path.abspath(os.path.dirname(__file__)).replace('\\', '/')
+database_file = os.path.join(settings_dir, 'db.sqlite').replace('\\', '/')
+
+# This flag allows debug messages to be output as the HTTP response if there is an error
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-#Tuple of admins for this site
+# Tuple of admins for this site
 ADMINS = (
      ('Sanjay Krishnan', 'sanjaykrishnan@berkeley.edu'),
 )
 
-#sets the url root for the site, this makes sure all the paths/stylesheets/scripts work
-URL_ROOT='http://opinion.berkeley.edu/ca-prop-30-awareness/'
+# Sets the URL root for the site, this makes sure all the paths/stylesheets/scripts work
+URL_ROOT = 'http://127.0.0.1:8000/'
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': database_file,                  # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -65,6 +68,8 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'y*wkv+^lamxfu577jyj6b@ijrugjz@8xl0zdk&+o8g2p63)f5w'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -83,12 +88,11 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'prop30.urls'
 
 TEMPLATE_DIRS = (
-        os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/')
+    os.path.join(settings_dir, 'templates').replace('\\', '/')
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
-
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -103,6 +107,9 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+BOOTSTRAP_URL = '/bootstrap/'
+BOOTSTRAP_DIR = os.path.abspath(os.path.join(settings_dir, '..', 'bootstrap'))
+
 #Destroy the cookie after browser is closed
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -110,6 +117,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 Algorithm parameters
 """
 PARENT_CHILD_DECAY_RATE = 2 #parent gets 1/rate points from child
-PROPAGATION_LIMIT = 10 #to ensure constant time updates we propagate points back only to this limit 
-
-
+PROPAGATION_LIMIT = 10 #to ensure constant time updates we propagate points back only to this limit
